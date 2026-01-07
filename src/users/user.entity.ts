@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { ElectricityHistory } from '../electricity_history/electricity_history.entity';
 
 @Entity('users')
 export class User {
@@ -27,6 +29,12 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(
+    () => ElectricityHistory,
+    (electricityHistory) => electricityHistory.user,
+  )
+  electricityHistories: ElectricityHistory[];
 
   @BeforeInsert()
   async hashPassword() {
