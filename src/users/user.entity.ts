@@ -5,13 +5,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { Expense } from '../expense/expense.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;
@@ -21,6 +23,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Expense, (expense) => expense.user)
+  expenses: Expense[];
 
   @CreateDateColumn()
   createdAt: Date;

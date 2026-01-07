@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
+import { ExpenseModule } from './expense/expense.module';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -41,6 +42,7 @@ import * as path from 'path';
     }),
     UsersModule,
     AuthModule,
+    ExpenseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
