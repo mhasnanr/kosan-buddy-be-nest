@@ -6,6 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
+import { ExpenseModule } from './expense/expense.module';
+import { Expense } from './expense/expense.entity';
+import { AccountModule } from './account/account.module';
+import { Account } from './account/account.entity';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -32,7 +36,7 @@ import * as path from 'path';
           username: configService.get<string>('POSTGRES_USER'),
           password: configService.get<string>('POSTGRES_PASSWORD'),
           database: configService.get<string>('POSTGRES_DB'),
-          entities: [User],
+          entities: [User, Expense, Account],
           synchronize: true,
           ssl: sslConfig,
         };
@@ -41,6 +45,8 @@ import * as path from 'path';
     }),
     UsersModule,
     AuthModule,
+    ExpenseModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [AppService],
