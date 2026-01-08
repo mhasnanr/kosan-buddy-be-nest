@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min, IsInt } from 'class-validator';
+import { IsString, IsNumber, Min } from 'class-validator';
 
 export class CreateAccountDto {
   @IsString()
@@ -7,7 +7,4 @@ export class CreateAccountDto {
   @IsNumber()
   @Min(0)
   balance: number;
-
-  @IsInt()
-  userId: number;
 }

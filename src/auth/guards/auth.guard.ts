@@ -9,7 +9,7 @@ import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 
 export interface TokenPayload {
-  id: string;
+  id: number;
   username: string;
 }
 

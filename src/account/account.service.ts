@@ -12,10 +12,9 @@ export class AccountService {
     private readonly accountRepository: Repository<Account>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto): Promise<Account> {
-    const { userId, ...rest } = createAccountDto;
+  create(userId: number, createAccountDto: CreateAccountDto): Promise<Account> {
     const account = this.accountRepository.create({
-      ...rest,
+      ...createAccountDto,
       user: { id: userId },
     });
     return this.accountRepository.save(account);
@@ -36,14 +35,7 @@ export class AccountService {
     id: number,
     updateAccountDto: UpdateAccountDto,
   ): Promise<Account | null> {
-    const { userId, ...rest } = updateAccountDto;
-    const updatePayload: Partial<Account> = { ...rest };
-
-    if (userId !== undefined) {
-      updatePayload.user = { id: userId } as Account['user'];
-    }
-
-    const result = await this.accountRepository.update(id, updatePayload);
+    const result = await this.accountRepository.update(id, updateAccountDto);
 
     if (result.affected === 0) {
       throw new NotFoundException(`Account with ID ${id} not found`);

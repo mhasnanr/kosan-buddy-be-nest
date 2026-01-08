@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
+import { Account } from '../account/account.entity';
 
 @Entity('expenses')
 export class Expense {
@@ -29,6 +30,10 @@ export class Expense {
   @ManyToOne(() => User, (user) => user.expenses)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @ManyToOne(() => Account, { nullable: true })
+  @JoinColumn({ name: 'account_id' })
+  account: Account;
 
   @CreateDateColumn()
   createdAt: Date;

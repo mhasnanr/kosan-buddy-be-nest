@@ -12,24 +12,25 @@ export class ExpenseService {
     private readonly expenseRepository: Repository<Expense>,
   ) {}
 
-  create(createExpenseDto: CreateExpenseDto): Promise<Expense> {
-    const { userId, date, ...expenseData } = createExpenseDto;
+  create(userId: number, createExpenseDto: CreateExpenseDto): Promise<Expense> {
+    const { date, accountId, ...expenseData } = createExpenseDto;
     const expense = this.expenseRepository.create({
       ...expenseData,
       date: new Date(date),
       user: { id: userId },
+      ...(accountId && { account: { id: accountId } }),
     });
     return this.expenseRepository.save(expense);
   }
 
   findAll(): Promise<Expense[]> {
-    return this.expenseRepository.find({ relations: ['user'] });
+    return this.expenseRepository.find({ relations: ['user', 'account'] });
   }
 
   findOne(id: number): Promise<Expense | null> {
     return this.expenseRepository.findOne({
       where: { id },
-      relations: ['user'],
+      relations: ['user', 'account'],
     });
   }
 

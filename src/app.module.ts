@@ -12,7 +12,9 @@ import { ElectricityHistoryService } from './electricity_history/electricity_his
 import { ExpenseModule } from './expense/expense.module';
 import { Expense } from './expense/expense.entity';
 import { AccountModule } from './account/account.module';
+import { AccountCategoryModule } from './account-category/account-category.module';
 import { Account } from './account/account.entity';
+import { AccountCategory } from './account-category/account-category.entity';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -39,8 +41,14 @@ import * as path from 'path';
           username: configService.get<string>('POSTGRES_USER'),
           password: configService.get<string>('POSTGRES_PASSWORD'),
           database: configService.get<string>('POSTGRES_DB'),
-          entities: [User, Expense, Account, ElectricityHistory],
-          synchronize: true,
+          entities: [
+            User,
+            Expense,
+            Account,
+            AccountCategory,
+            ElectricityHistory,
+          ],
+          synchronize: false,
           ssl: sslConfig,
         };
       },
@@ -51,6 +59,7 @@ import * as path from 'path';
     ElectricityHistoryModule,
     ExpenseModule,
     AccountModule,
+    AccountCategoryModule,
   ],
   controllers: [AppController, ElectricityHistoryController],
   providers: [AppService, ElectricityHistoryService],

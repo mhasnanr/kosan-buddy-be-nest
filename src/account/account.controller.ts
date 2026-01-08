@@ -8,18 +8,26 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import type { RequestWithUser } from '../auth/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountService.create(createAccountDto);
+  create(
+    @Body() createAccountDto: CreateAccountDto,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.accountService.create(req.user.id, createAccountDto);
   }
 
   @Get()

@@ -8,18 +8,26 @@ import {
   Delete,
   ParseIntPipe,
   NotFoundException,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import type { RequestWithUser } from '../auth/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Post()
-  create(@Body() createExpenseDto: CreateExpenseDto) {
-    return this.expenseService.create(createExpenseDto);
+  create(
+    @Body() createExpenseDto: CreateExpenseDto,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.expenseService.create(req.user.id, createExpenseDto);
   }
 
   @Get()
