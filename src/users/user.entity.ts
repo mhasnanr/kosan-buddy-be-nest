@@ -8,6 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { ElectricityHistory } from '../electricity_history/electricity_history.entity';
 import { Expense } from '../expense/expense.entity';
 import { Account } from '../account/account.entity';
 
@@ -36,6 +37,12 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(
+    () => ElectricityHistory,
+    (electricityHistory) => electricityHistory.user,
+  )
+  electricityHistories: ElectricityHistory[];
 
   @BeforeInsert()
   async hashPassword() {
