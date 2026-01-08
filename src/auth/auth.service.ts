@@ -17,7 +17,7 @@ export class AuthService {
 
   async register(
     registerUserDto: RegisterUserDto,
-  ): Promise<{ id: string; username: string }> {
+  ): Promise<{ id: number; username: string }> {
     const { username } = registerUserDto;
     const existingUser = await this.usersService.findOne(username);
 

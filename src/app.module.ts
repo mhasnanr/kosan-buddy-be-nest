@@ -9,6 +9,10 @@ import { User } from './users/user.entity';
 import { ElectricityHistoryModule } from './electricity_history/electricity_history.module';
 import { ElectricityHistoryController } from './electricity_history/electricity_history.controller';
 import { ElectricityHistoryService } from './electricity_history/electricity_history.service';
+import { ExpenseModule } from './expense/expense.module';
+import { Expense } from './expense/expense.entity';
+import { AccountModule } from './account/account.module';
+import { Account } from './account/account.entity';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -35,7 +39,7 @@ import * as path from 'path';
           username: configService.get<string>('POSTGRES_USER'),
           password: configService.get<string>('POSTGRES_PASSWORD'),
           database: configService.get<string>('POSTGRES_DB'),
-          entities: [User, ElectricityHistory],
+          entities: [User, Expense, Account, ElectricityHistory],
           synchronize: true,
           ssl: sslConfig,
         };
@@ -45,6 +49,8 @@ import * as path from 'path';
     UsersModule,
     AuthModule,
     ElectricityHistoryModule,
+    ExpenseModule,
+    AccountModule,
   ],
   controllers: [AppController, ElectricityHistoryController],
   providers: [AppService, ElectricityHistoryService],
