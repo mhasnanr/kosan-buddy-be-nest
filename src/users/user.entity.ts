@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { Expense } from '../expense/expense.entity';
+import { Account } from '../account/account.entity';
 
 @Entity('users')
 export class User {
@@ -26,6 +27,9 @@ export class User {
 
   @OneToMany(() => Expense, (expense) => expense.user)
   expenses: Expense[];
+
+  @OneToMany(() => Account, (account) => account.user)
+  accounts: Account[];
 
   @CreateDateColumn()
   createdAt: Date;
